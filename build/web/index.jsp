@@ -1,4 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="model.User"%>
+
 <html>
     <head>
         <title>Login</title>
@@ -7,16 +9,16 @@
         <link rel="stylesheet" href="css/style.css"/>
     </head>
     <body>
-        <div id ='login_box'>
-            <form action="LoginController" method="post">
-                <h1>Login: </h1> 
-                <h2>Login: <input type="text" placeholder="Login..." name="login"required></h2>
-                <h2>Senha: <input type="password" placeholder="Senha..." name="password" required></h2>
-            <input type="submit" >
-       
-            
+        
+            <div class="div">
+            <form action="login_controller" method="post">
+                <h1 class="title">Login: </h1> 
+                <h2>Username: <input type="text" placeholder="Username" name="user"required></h2>
+                <h2>Password: <input type="password" placeholder="Password" name="password" required></h2>
+                <input type="submit" class="button" >
             </form>
-        </div>
+            </div>
+       
     </body>
 </html>
 

@@ -1,62 +1,59 @@
-
-package Controller;
+package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.sql.SQLException;
 import model.User;
 
 
-@WebServlet(name = "LoginController", urlPatterns = {"/LoginController"})
-public class LoginController extends HttpServlet {
-    private String password;
-    private String login;
 
+@WebServlet(name = "LoginController", urlPatterns = {"/login_controller"})
+public class LoginController extends HttpServlet {
+    //Atributos
+    private String user;
+    private String pass;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        this.password = request.getParameter("password");
-        this.login = request.getParameter("login");
+        this.user = request.getParameter("user");
+        this.pass = request.getParameter("password");
         
-        User newUser = new User(this.login, this.password);
-        try{
-        if (newUser.isLogged()){
+        User newUser = new User(this.user, this.pass);
+        
+        try {
+        
+        if(newUser.isLogged()) {
             HttpSession session = request.getSession();
             session.setAttribute("userSession", newUser);
             request.setAttribute("userLogged", newUser);
-            request.getRequestDispatcher("home.jsp").forward(request, response);
-        
-        }else {
-        
+            request.getRequestDispatcher("home.jsp")
+                    .forward(request, response);
+        } else {
             try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LoginController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet LoginController at " + request.getContextPath() + "</h1>");
-            out.println("<script>");
-            out.println("alert('Acesso negado!');");
-            out.println("window.location.replace('index.jsp');");
-            out.println("</script>");
-            
-            out.println("</body>");
-            
-            out.println("</html>");
-        } 
+                /* TODO output your page here. You may use following sample code. */
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Game</title>");            
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<script>");
+                out.println("alert('Acesso negado!');");
+                out.println("window.location.replace('index.jsp');");
+                out.println("</script>");
+                out.println("</body>");
+                out.println("</html>");
+            }
         }
-        
-        
-        
-    } catch(ClassNotFoundException | SQLException erro) {
+        } catch(ClassNotFoundException | SQLException erro) {
                 try (PrintWriter out = response.getWriter()){
                     out.print(erro);
                 }
